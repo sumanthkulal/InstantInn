@@ -29,22 +29,38 @@ const Navbar = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    useEffect(() => {
-        if(location.pathname != '/')
-        {
-            setIsScrolled(true);
-            return;
-        }else{
-            setIsScrolled(false);
-        }
-        setIsScrolled(prev =>location.pathname !== '/' ? true : prev)
+    // useEffect(() => {
+    //     if(location.pathname != '/')
+    //     {
+    //         setIsScrolled(true);
+    //         return;
+    //     }else{
+    //         setIsScrolled(false);
+    //     }
+    //     setIsScrolled(prev =>location.pathname !== '/' ? true : prev)
 
+    //     const handleScroll = () => {
+    //         setIsScrolled(window.scrollY > 10);
+    //     };
+    //     window.addEventListener("scroll", handleScroll);
+    //     return () => window.removeEventListener("scroll", handleScroll);
+    // }, [[location.pathname]]);
+
+    useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 10);
+            if (location.pathname !== '/') {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(window.scrollY > 10);
+            }
         };
+
+        // Run checking calculation immediately on render changes
+        handleScroll();
+
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+    }, [location.pathname]);
 
     return (
     
